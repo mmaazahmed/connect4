@@ -1,5 +1,5 @@
 from random import randrange
-
+from minmax_agent import get_ai_move
 def createBoard():
     board= ['','','','','','','']
     return board
@@ -20,9 +20,10 @@ def display_board(board,round):
         print(col)
 
 
-
 def is_winning_vertical(board,move,piece):
     return (board[move][-4:].count(piece)==4)
+
+
 
 def is_winning_horizontal(board,move,piece):
     COL=7
@@ -82,11 +83,11 @@ def isWinningMove(board,move,piece):
     return (is_winning_vertical(board,move,piece) or is_winning_negative_diagonal(board,move,piece)  or 
             is_winning_positive_diagonal(board,move,piece) or is_winning_horizontal(board,move,piece)  )
 
-def get_ai_move(board):
-    move=randrange(1,8)
-    while not isValidMove(board,move):
-        move=randrange(1,8)
-    return move-1
+# def get_ai_move(board):
+#     move=randrange(1,8)
+#     while not isValidMove(board,move):
+#         move=randrange(1,8)
+#     return move-1
 
 def isValidMove(board,move):
     if (move<1 or move>7):
@@ -135,6 +136,7 @@ def play(board,isPlayerTurn):
 def drop_piece(board,column,piece):
     board[column]+=piece
     # return not isWinningMove(board,column,piece)
+
 
 
 
