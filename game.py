@@ -1,4 +1,3 @@
-from random import randrange
 def createBoard():
     board= ['','','','','','','']
     return board
@@ -82,12 +81,6 @@ def isWinningMove(board,move,piece):
     return (is_winning_vertical(board,move,piece) or is_winning_negative_diagonal(board,move,piece)  or 
             is_winning_positive_diagonal(board,move,piece) or is_winning_horizontal(board,move,piece)  )
 
-def get_ai_move(board):
-    move=randrange(1,8)
-    while not isValidMove(board,move):
-        move=randrange(1,8)
-    return move-1
-
 def isValidMove(board,move):
     if (move<1 or move>7):
         print("invalid input please input value between 1 and 7")
@@ -96,56 +89,3 @@ def isValidMove(board,move):
         print("Col is full, please select different colum")
         return False
     return True
-    
-def get_player_move(board):
-    print("input value between 1 and 7")
-    move=int(input('enter move:'))
-    while not isValidMove(board,move):
-        move=int(input('enter move:'))
-
-    return move-1
-    
-
-def play(board,isPlayerTurn):
-    winner=''
-    game_state=True
-    round=1
-    while game_state:
-        if isPlayerTurn:
-            player_move=get_player_move(board)
-            drop_piece(board,player_move,'x')
-            if isWinningMove(board,player_move,'x'):
-                game_state=False
-                winner='Player'
-        else:
-            ai_move=get_ai_move(board)
-            drop_piece(board,ai_move,'o')
-            display_board(board,round)
-            round+=1
-            if isWinningMove(board,ai_move,'o'):
-                game_state=False
-                winner='AI, getf'
-
-        isPlayerTurn= not (isPlayerTurn)
-    display_board(board,round)
-    print("game won by",winner)
-
-
-
-def drop_piece(board,column,piece):
-    board[column]+=piece
-    # return not isWinningMove(board,column,piece)
-
-
-
-
-
-
-
-board=createBoard()
-play(board,True)
-# board= ['xxxxxx','o','o','','oo','o','o']
-# is_winning_horizontal(board,4,'o')
-# display_board(board)
-
-# x()
