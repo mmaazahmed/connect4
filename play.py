@@ -1,48 +1,62 @@
 from random import randrange
-import game
+from game import Connect4
 from player import Player
+from minmax_agent import MinmaxAgent
+Connect4=Connect4()
+def get_players():
+    players=[]
+    fighter=input("Choose your Fighter: 1:Human, 2:AI\n ")
+    fighter_name=input("Enter figher name\n")
+    opponent=input("Choose your Opponent: 1:Human, 2:AI\n")
+    opponent_name=input("Enter opponent name\n")
 
-def get_ai_move(board):
-    move=randrange(1,8)
-    while not game.isValidMove(board,move):
-        move=randrange(1,8)
-    return move-1
+    if int(fighter)==1:
+        Player1=Player(fighter_name)
+        players.append(Player1)
+    else:
+        Player1=MinmaxAgent(fighter_name)
+        players.append(Player1)
+    
+    if int(opponent)==1:
+        Player2=Player(opponent_name)
+        players.append(Player2)
+    else:
+        Player2=MinmaxAgent(opponent_name)
+        players.append(Player2)
+    return players
 
-def play(board,isPlayerTurn):
+def play(Game,isPlayerTurn,players):
     winner=''
     game_state=True
     round=1
-    player1=Player("player1")
+    # player1=Player("player1")
+    # Bob=MinmaxAgent('Bob')
     while game_state:
         if isPlayerTurn:
-            player_move=player1.get_move(board)
-            drop_piece(board,player_move,'x')
-            if game.isWinningMove(board,player_move,'x'):
+            player_move=players[0].get_move(Game)
+            Connect4.drop_piece(player_move,'x')
+            if Connect4.isWinningMove(player_move,'x'):
                 game_state=False
-                winner=player1.get_name()
+                winner=players[0].get_name()
         else:
-            ai_move=get_ai_move(board)
-            drop_piece(board,ai_move,'o')
-            game.display_board(board,round)
+            ai_move=players[1].get_move(Game)
+            Connect4.drop_piece(ai_move,'o')
+            Connect4.display_board(round)
             round+=1
-            if game.isWinningMove(board,ai_move,'o'):
+            if Connect4.isWinningMove(ai_move,'o'):
                 game_state=False
-                winner='AI, getf'
+                winner=players[1].get_name()
 
         isPlayerTurn= not (isPlayerTurn)
-    game.display_board(board,round)
+    Connect4.display_board(round)
     print("game won by",winner)
 
 
 
-def drop_piece(board,column,piece):
-    board[column]+=piece
-    # return not isWinningMove(board,column,piece)
+# def drop_piece(board,column,piece):
+#     board[column]+=piece
 
-board=game.createBoard()
-play(board,True)
-# board= ['xxxxxx','o','o','','oo','o','o']
-# is_winning_horizontal(board,4,'o')
-# display_board(board)
-
-# x()
+# board=game.createBoard()
+players=get_players()
+board=Connect4.get_board()
+play(Connect4,True,players)
