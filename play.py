@@ -35,7 +35,7 @@ def play(Game,isPlayerTurn,players):
         if isPlayerTurn:
             player_move=players[0].get_move(Game)
             Connect4.drop_piece(player_move,'x')
-            if Connect4.isWinningMove(player_move,'x'):
+            if Connect4.is_winning_move(player_move,'x'):
                 game_state=False
                 winner=players[0].get_name()
         else:
@@ -43,7 +43,7 @@ def play(Game,isPlayerTurn,players):
             Connect4.drop_piece(ai_move,'o')
             Connect4.display_board(round)
             round+=1
-            if Connect4.isWinningMove(ai_move,'o'):
+            if Connect4.is_winning_move(ai_move,'o'):
                 game_state=False
                 winner=players[1].get_name()
 

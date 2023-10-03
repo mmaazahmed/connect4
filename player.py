@@ -9,7 +9,7 @@ class Player:
     def get_move(self,Game):
         print("input value between 1 and 7")
         move=int(input('enter move:'))
-        while not Connect4.isValidMove(Game,move):
+        while not Connect4.is_valid_move(Game,move):
             move=int(input('enter move:'))
 
         return move-1

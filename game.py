@@ -1,16 +1,16 @@
 class Connect4:
     board=['','','','','','','']
 
-    def __init__(self):
-        pass
+    def __init__(self,board=None):
+        if board is not None:
+            self.board=board
 
     def get_board(self):
         return self.board
 
     def display_board(self,round):
-        print("round No",round)
+        print("Round No:",round)
         print(1,2,3,4,5,6,7)
-        # print(0,1,2,3,4,5,6)
         for j in reversed(range(6)):
             col=''
             for i in range(7):
@@ -21,7 +21,6 @@ class Connect4:
                 col+='|'
             print(col)
 
-
     def is_winning_vertical(self,move,piece):
         return (self.board[move][-4:].count(piece)==4)
 
@@ -31,7 +30,6 @@ class Connect4:
         count=0
 
         for col in range(move,COL):
-            # print(col,"col")
             if row>len(self.board[col])-1 or self.board[col][row]!=piece:
                 break
             count+=1
@@ -51,12 +49,11 @@ class Connect4:
             if row-i<0 or col-i<0 or (len(self.board[col-i])<=row-i) or self.board[col-i][row-i]!=piece:
                 break
             count+=1
-        
         for i in range(7-row):
             if row+i>=6 or col+i>=7 or (len(self.board[col+i])<=row+i)or self.board[col+i][row+i]!=piece :
                 break
-        
             count+=1
+
         return (count>=4)
 
     def is_winning_negative_diagonal(self,move,piece):
@@ -71,18 +68,13 @@ class Connect4:
             if (row-i<0 or col+i>6) or (len(self.board[col+i])<=row-i) or self.board[col+i][row-i]!=piece:
                 break
             count+=1
-
         return (count>=4)
 
-
-            
-
-
-    def isWinningMove(self,move,piece):
+    def is_winning_move(self,move,piece):
         return (self.is_winning_vertical(move,piece) or self.is_winning_negative_diagonal(move,piece)  or 
                 self.is_winning_positive_diagonal(move,piece) or self.is_winning_horizontal(move,piece)  )
 
-    def isValidMove(self,move):
+    def is_valid_move(self,move):
         if (move<1 or move>7):
             print("invalid input please input value between 1 and 7")
             return False
